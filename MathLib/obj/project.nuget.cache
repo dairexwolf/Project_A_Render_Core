@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "2cX2ohpFXc8=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Wolf\\Documents\\PlanProjects\\0_render_core\\MathLib\\MathLib.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Wolf\\.nuget\\packages\\microsoft.net.sdk.compilers.toolset\\9.0.301\\microsoft.net.sdk.compilers.toolset.9.0.301.nupkg.sha512"
+  ],
+  "logs": []
+}
