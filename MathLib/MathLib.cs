@@ -41,6 +41,7 @@
         /// <param name="a">First num</param>
         /// <param name="b">Second num</param>
         /// <returns>a divided by b</returns>
+        /// <exception cref="DivideByZeroException">When b is 0</exception>
         public int Divide(int a, int b)
         {
             return a / b;
