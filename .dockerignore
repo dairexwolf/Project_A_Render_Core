@@ -1,0 +1,39 @@
+# Временные файлы сборки .NET
+**/bin/
+**/obj/
+**/artifacts/
+
+# Файлы и папки IDE
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.csproj.user
+
+# Системные файлы Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Git (репозиторий не нужен внутри образа)
+.git/
+.gitignore
+.gitattributes
+
+# Docker-файлы (избегаем рекурсии)
+Dockerfile
+.dockerignore
+
+# Логи и временные файлы
+*.log
+*.pid
+*.swp
+*.swo
+
+# Всегда исключайте:
+**/*.pfx
+**/*.p12
+**/id_rsa
+**/.ssh/
