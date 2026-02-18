@@ -1,5 +1,6 @@
 ﻿using Xunit;
 using MathLib;
+using System.Reflection;
 
 namespace MathLib.Tests
 {
@@ -72,6 +73,18 @@ namespace MathLib.Tests
             float a = 5f, b = 0f;
             // Act & Assert
             Assert.Throws<DivideByZeroException>(() => calc.Divide(a, b));
+        }
+    }
+
+public class MathUtilsTests
+    {
+        [Fact]
+        public void MathUtils_Epsilon_IsDefinded()
+        {
+            // Arrange and Act
+            float eps = MathUtils.Epsilon;
+            // Assert
+            Assert.Equal(0.0001f, eps);
         }
     }
 }
