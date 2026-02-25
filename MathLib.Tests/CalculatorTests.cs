@@ -1,6 +1,7 @@
 ﻿using Xunit;
 using MathLib;
 using System.Reflection;
+using System.ComponentModel.DataAnnotations;
 
 namespace MathLib.Tests
 {
@@ -143,6 +144,87 @@ public class MathUtilsTests
 
             // Assert
             Assert.Equal(expected, result, precision: 5);
+        }
+
+        [Fact]
+        public void Quadratic_TwoRealRoots_ReturnsCorrectValues()
+        {
+            // 2x^2 - x - 3 = 0 -> корни 1.5 и -1
+            // Arrange & Act
+            var roots = MathUtils.Quadratic(2f, -1f, -3f);
+
+            // Assert
+            Assert.Equal(-1f, roots[1], precision: 5);
+            Assert.Equal(1.5f, roots[0], precision: 5);
+        }
+
+        [Fact]
+        public void Quadratic_OneRoot_DiscriminantZero()
+        {
+            // x^2 - 4x + 4 = 0 -> корень: 2
+            // Arrange & Act
+            var roots = MathUtils.Quadratic(1f, -4f, 4f);
+
+            // Assert
+            Assert.Equal(2f, roots[0], precision: 5);
+            Assert.True(float.IsNaN(roots[1]));
+        }
+
+        [Fact]
+        public void Quadratic_NoRealRoots_ReturnNaNs()
+        {
+            // x^2 + 1 = 0 -> нет корней
+            // Arrange & Act
+            var roots = MathUtils.Quadratic(1f, 0f, 1f);
+
+            // Assert
+            Assert.True(float.IsNaN(roots[0]));
+            Assert.True(float.IsNaN(roots[1]));
+        }
+
+        [Fact]
+        public void Quadratic_DegenerateToLinearCase_OneRoot()
+        {
+            // 0x^2 + 2x + 4 = 0 -> линейное: 2x = -4, x = -2
+            // Arrange & Act
+            var roots = MathUtils.Quadratic(0f, 2f, 4f);
+
+            // Assert
+            Assert.Equal(-2f, roots[0], precision: 5);
+            Assert.True(float.IsNaN(roots[1]));
+        }
+
+        [Fact]
+        public void NthRoot_TwoPositiveNums_ReturnSqrt()
+        {
+            // Arrange
+            float value = 9f;
+            float n = 2f;
+
+            // Act
+            float res = MathUtils.NthRoot(value, n);
+
+            // Assert -> sqrt(9) = 3
+            Assert.Equal(3f, res, precision: 5);
+        }
+
+        [Fact]
+        public void SqrtNR_TwoPositiveNums_ReturnSqrt()
+        {
+            // Arrange
+            float value = 25f;
+
+            // Act
+            float res = MathUtils.SqrtNR(value);
+
+            // Assert -> sqrt(25) = 5
+            Assert.Equal(5f, res, precision: 5);
+        }
+
+        [Fact]
+        public void SqrtNR_NegativeValue_ReturnsNaN()
+        {
+            Assert.True(float.IsNaN(MathUtils.SqrtNR(-4f)));
         }
     }
 }

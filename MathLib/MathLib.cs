@@ -156,10 +156,50 @@
             return MathF.Pow(baseValue, exponent);
         }
 
+        /// <summary>
+        /// Returns the root of a number using the MathF library
+        /// </summary>
         public static float Sqrt(float value)
         {
             if (value < 0f) return float.NaN;
             return MathF.Sqrt(value);
+        }
+
+        /// <summary>
+        /// Метод Ньютона (Newton-Raphson). Итеративный алгоритм, который сходится к корню.
+        /// Алгоритм решает уравнение x^2 - value = 0 через итерации:
+        /// x_{n+1} = 0.5 * (x_n + value / x_n)
+        /// </summary>
+        public static float SqrtNR(float value)
+        {
+            if (value < 0f) return float.NaN;
+            if (value == 0f || value == 1f) return value;
+
+            // Начальное приближение: половина от value
+            float x = value * 0.5f;
+
+            // Итерации метода Ньютона: x_new = 0.5 * (x + value/x)
+            for (int i = 0; i < 20; i++) // 20 итераций достаточно для сходимости float
+            {
+                float nextX = 0.5f * (x + value / x);
+
+                // Проверка сходимости
+                if (MathF.Abs(nextX - x) < EpsilonStrict)
+                    return nextX;
+
+                x = nextX;
+            }
+
+            return x;
+        }
+
+        /// <summary>
+        /// Raising to a root using the power property
+        /// </summary>
+        public static float NthRoot(float value, float n)
+        {
+            // n^sqrt(a) ≡ a^(1/n)
+            return Power(value, 1f / n);
         }
     }
 }
