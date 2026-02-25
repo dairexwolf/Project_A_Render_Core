@@ -86,5 +86,63 @@ public class MathUtilsTests
             // Assert
             Assert.Equal(0.0001f, eps);
         }
+
+        [Fact]
+        public void Power_PositiveExponent_ReturnCorrectResult()
+        {
+            // Arrange
+            float baseValue = 2f;
+            float exponent = 3f;
+            float expected = 8f;
+
+            //Act
+            float result = MathUtils.Power(baseValue, exponent);
+
+            // Assert
+            Assert.Equal(expected, result, precision: 5);
+        }
+
+        [Fact]
+        public void Power_ZeroExponent_ReturnsOne()
+        {
+            // Arrange
+            float baseValue = 2f;
+            float exponent = 0f;
+            float expected = 1f;
+
+            //Act
+            float result = MathUtils.Power(baseValue, exponent);
+
+            // Assert
+            Assert.Equal(expected, result, precision: 5);
+        }
+
+        [Fact]
+        public void Square_PositiveValue_ReturnsCorrectResult()
+        {
+            // Arrange
+            float baseValue = 3f;
+            float expected = 9f;
+
+            //Act
+            float result = MathUtils.Square(baseValue);
+
+            // Assert
+            Assert.Equal(expected, result, precision: 5);
+        }
+
+        [Fact]
+        public void Square_NegotiveValue_ReturnsCorrectResult()
+        {
+            // Arrange
+            float baseValue = -4f;
+            float expected = 16f;
+
+            //Act
+            float result = MathUtils.Square(baseValue);
+
+            // Assert
+            Assert.Equal(expected, result, precision: 5);
+        }
     }
 }
