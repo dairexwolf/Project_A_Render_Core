@@ -201,5 +201,43 @@
             // n^sqrt(a) ≡ a^(1/n)
             return Power(value, 1f / n);
         }
+
+        /// <summary>
+        /// Вычисляет логарифм числа по произвольному основаниюю. Все методы делигируют все библиотеке MathF
+        /// </summary>
+        /// <param name="value">Число > 0</param>
+        /// <param name="baseValue">Основание логарифма (> 0, != 1)</param>
+        /// <returns>log_baseValue(value)</returns>
+        public static float Log(float value, float baseValue)
+        {
+            // log_a(b), a - основание, b - аргумент
+            // Проверка аргумента
+            if (value <= 0f || float.IsNaN(value)) return float.NaN;
+            // Проверка основания
+            if (baseValue <= 0f || MathF.Abs(baseValue - 1f) < Epsilon || float.IsNaN(baseValue)) return float.NaN;
+
+            // Смена основания
+            /// Стандартная библиотека .NET предоставляет только MathF.Log (натуральный) и MathF.Log10. Для произвольного основания используем формулу смены основания — это математически корректно и соответствует учебным целям.
+            /// Смена основания: log_b(a) = ln(a) / ln(b)
+            return MathF.Log(value) / MathF.Log(baseValue);
+        }
+
+        /// <summary>
+        /// Вычисляет десятичный логарифм по основанию 10. 
+        /// </summary>
+        public static float Log10(float value)
+        {
+            if (value <= 0f || float.IsNaN(value)) return float.NaN;
+            return MathF.Log10(value);
+        }
+
+        /// <summary>
+        /// Вычисляет десятичный логарифм по основанию e
+        /// </summary>
+        public static float Ln(float value)
+        {
+            if (value <= 0f || float.IsNaN(value)) return float.NaN;
+            return MathF.Log(value);    // MathF.Log - натуральный логарифм
+        }
     }
 }

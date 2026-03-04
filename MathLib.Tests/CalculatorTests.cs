@@ -226,5 +226,95 @@ public class MathUtilsTests
         {
             Assert.True(float.IsNaN(MathUtils.SqrtNR(-4f)));
         }
+
+        [Fact]
+        public void Log_Base2of8_Returns3()
+        {
+            // log_2(8) = 3, 2^3 = 8
+            // Arrange
+            float x = 8f;
+            float y = 2f;
+            // Act
+            float res = MathUtils.Log(x, y);
+            // Assert
+            Assert.Equal(3f, res, precision: 5);
+        }
+
+        [Fact]
+        public void Log10_of10000_Returns4()
+        {
+            // log_10(10000) = 4
+            // Arrange
+            float x = 10000f;
+            // Act
+            float res = MathUtils.Log10(x);
+            // Assert
+            Assert.Equal(4f, res, precision: 5);
+        }
+
+        [Fact]
+        public void Log10_ofE_Returns1()
+        {
+            // ln(e) = 1
+            // Arrange & Act
+            float res = MathUtils.Ln(MathF.E);
+            // Assert
+            Assert.Equal(1f, res, precision: 5);
+        }
+
+        [Fact]
+        public void Log_ZeroValue_ReturnsNaN()
+        {
+            // Arrange
+            float x = 0f;
+            float y = 2f;
+            // Act
+            float res = MathUtils.Log(x, y);
+            // Assert
+            Assert.True(float.IsNaN(res));
+        }
+
+        [Fact]
+        public void Log_NegativeValue_ReturnsNaN()
+        {
+            // Arrange
+            float x = -10f;
+            float y = 2f;
+            // Act
+            float res = MathUtils.Log(x, y);
+            // Assert
+            Assert.True(float.IsNaN(res));
+        }
+
+        [Fact]
+        public void Log_Base1_ReturnsNaN()
+        {
+            // Логарифм по основанию 1 не определен
+            // log_1(8) = NaN
+            // Arrange
+            float x = 8f;
+            float y = 1f;
+            // Act
+            float res = MathUtils.Log(x, y);
+            // Assert
+            Assert.True(float.IsNaN(res));
+        }
+
+        [Fact]
+        public void Log_PropertyOfProduct()
+        {
+            // Проверка первого свойства логарифма: log_b(xy) = log_b(x) + log_b(y)
+            // Arrange
+            float x = 4f;
+            float y = 8f;
+            float b = 2f;
+
+            // Act
+            float left = MathUtils.Log(x * y, b);
+            float right = MathUtils.Log(x, b) + MathUtils.Log(y, b);
+
+            // Assert
+            Assert.Equal(left, right, precision: 5);
+        }
     }
 }
