@@ -64,9 +64,9 @@ sysinfo.txt
 .localhistory/
 
 # Solution/project files (auto-generated)
-*.csproj
+# *.csproj
 *.unityproj
-*.sln
+# *.sln
 *.booproj
 *.svd
 *.tmp_proj
