@@ -77,7 +77,7 @@ namespace MathLib.Tests
         }
     }
 
-public class MathUtilsTests
+    public class MathUtilsTests
     {
         [Fact]
         public void MathUtils_Epsilon_IsDefinded()
@@ -315,6 +315,119 @@ public class MathUtilsTests
 
             // Assert
             Assert.Equal(left, right, precision: 5);
+        }
+
+        [Fact]
+        public void EvaluateLinear_PositiveXAndTwoPositiveNums_ReturnsCorrectValue()
+        {
+            // f(x) = 2x+3, x=4, res = 11
+            // Arrange
+            float a = 2f;
+            float b = 3f;
+            float x = 4f;
+            // Act
+            float res = MathUtils.EvaluateLinear(x, a, b);
+            // Assert
+            Assert.Equal(11f, res, precision: 5);
+        }
+
+        [Fact]
+        public void EvaluateLinear_NegativeXAndTwoPositiveNums_ReturnsCorrectValue()
+        {
+            // f(x) = 2x+3, x=-4, res = -5
+            // Arrange
+            float a = 2f;
+            float b = 3f;
+            float x = -4f;
+            // Act
+            float res = MathUtils.EvaluateLinear(x, a, b);
+            // Assert
+            Assert.Equal(-5f, res, precision: 5);
+        }
+
+        [Fact]
+        public void EvaluateLinear_ZeroSlope_ReturnsIntercept()
+        {
+            // f(x) = 0x+3, x=4, res = 3
+            // Arrange
+            float a = 0f;
+            float b = 3f;
+            float x = 4f;
+            // Act
+            float res = MathUtils.EvaluateLinear(x, a, b);
+            // Assert
+            Assert.Equal(3f, res, precision: 5);
+        }
+
+        [Fact]
+        public void EvaluateLinearThroughTwoPoints_LinearLine_ReturnsCorrectValue()
+        {
+            // Point (1, 1) and (3, 3), x = 10, rez = 10
+            // Arrange
+            float x = 10f;
+            float x1 = 1f;
+            float y1 = 1f;
+            float x2 = 3f;
+            float y2 = 3f;
+            // Act
+            float res = MathUtils.EvaluateLinearThroughPoints(x, x1, y1, x2, y2);
+            // Assert
+            Assert.Equal(10f, res, precision: 5);
+        }
+
+        [Fact]
+        public void EvaluateLinearThroughTwoPoints_HorizontalLine_ReturnsConstant()
+        {
+            // Point (0, 3) and (5, 3), res - horizontal line, where y=3
+            // Arrange
+            float x = 10f;
+            float x1 = 0f;
+            float y1 = 3f;
+            float x2 = 5f;
+            float y2 = 3f;
+            // Act
+            float res = MathUtils.EvaluateLinearThroughPoints(x, x1, y1, x2, y2);
+            // Assert
+            Assert.Equal(3f, res, precision: 5);
+        }
+
+        [Fact]
+        public void EvaluateLinearThroughTwoPoints_VerticalLine_ReturnsNaN()
+        {
+            // Point (2, 0) and (2, 5), res - vertical line, non function, res = NaN
+            // Arrange
+            float x = 2f;
+            float x1 = 2f;
+            float y1 = 0f;
+            float x2 = 2f;
+            float y2 = 5f;
+            // Act
+            float res = MathUtils.EvaluateLinearThroughPoints(x, x1, y1, x2, y2);
+            // Assert
+            Assert.True(float.IsNan(res));
+        }
+
+        [Fact]
+        public void EvaluateQuadratic_NegativeX_CorrectValue()
+        {
+            // f(-1) = 2(-1)^2-(-1)-3 = 3-3=0
+            // Arrange & Act
+            float res = MathUtils.EvaluateQuadratic(-1f, 2f, 1f, -3f);
+
+            // Assert
+            Assert.Equal(0f, res, precision: 5);
+        }
+
+        [Fact]
+        public void EvaluateQuadratic_AllPositiveNums_CorrectValue()
+        {
+            // f(x) = 2*x^2+5x+10
+            // f(10) = 2*(100)+50+10 = 260
+            // Arrange & Act
+            float res = MathUtils.EvaluateQuadratic(10f, 2f, 5f, 10f);
+
+            // Assert
+            Assert.Equal(260f, res, precision: 5);
         }
     }
 }

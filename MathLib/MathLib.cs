@@ -141,6 +141,39 @@
         }
 
         /// <summary>
+        /// Evaluating Quadratic Function by type - f(x) = ax^2 + bx + c
+        /// </summary>
+        public static float EvaluateQuadratic(float x, float a, float b, float c)
+        {
+            float res = a * Square(x) + b * x + c;
+            return res;
+        }
+
+        /// <summary>
+        /// Evaluating linear function by type - f(x) = kx + b
+        /// </summary>
+        /// <returns></returns>
+        public static float EvaluateLinear(float x, float slope, float intercept)
+        {
+            float res = x * slope + intercept;
+            return res;
+        }
+
+        /// <summary>
+        /// Evaluating linear function though Two point on coods x1, y1, x2, y2
+        /// </summary>
+        public static float EvaluateLinearThroughPoints(float x, float x1, float y1, float x2, float y2)
+        {
+            // Checking the vertical line (dividing by zero)
+            if (MathF.Abs(x2 - x1) < Epsilon)
+                return float.NaN;
+            float slope = (y2 - y1) / (x2 - x1);
+            float intercept = y1 - slope * x1;
+            float res = slope * x + intercept;
+            return res;
+        }
+
+        /// <summary>
         /// Retuns the square of a value
         /// </summary>
         public static float Square(float value)
