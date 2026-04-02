@@ -404,7 +404,7 @@ namespace MathLib.Tests
             // Act
             float res = MathUtils.EvaluateLinearThroughPoints(x, x1, y1, x2, y2);
             // Assert
-            Assert.True(float.IsNan(res));
+            Assert.True(float.IsNaN(res));
         }
 
         [Fact]
@@ -412,7 +412,7 @@ namespace MathLib.Tests
         {
             // f(-1) = 2(-1)^2-(-1)-3 = 3-3=0
             // Arrange & Act
-            float res = MathUtils.EvaluateQuadratic(-1f, 2f, 1f, -3f);
+            float res = MathUtils.EvaluateQuadratic(-1f, 2f, -1f, -3f);
 
             // Assert
             Assert.Equal(0f, res, precision: 5);
