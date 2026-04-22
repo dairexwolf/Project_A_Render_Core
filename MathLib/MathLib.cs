@@ -272,5 +272,42 @@
             if (value <= 0f || float.IsNaN(value)) return float.NaN;
             return MathF.Log(value);    // MathF.Log - натуральный логарифм
         }
+
+        // Преобразование функций
+
+        /// <summary>
+        /// Applies horizontal shift: g(x) = f(x - shift)
+        /// </summary>
+        public static float ShiftHorizontal(Func<float, float> function, float x, float shift)
+        {
+            return function(x - shift);
+        }
+
+        /// <summary>
+        /// Applies vertical shift: g(x) = f(x) + shift
+        /// </summary>
+        public static float ShiftVertical(Func<float, float> function, float x, float shift)
+        {
+            return function(x) + shift;
+        }
+
+        /// <summary>
+        /// Applies horizontal scaling: g(x) = f(x / scale)
+        /// </summary>
+        public static float ScaleHorizontal(Func<float, float> function, float x, float scale)
+        {
+            // scale не должен быть нулевым, потому что на ноль не делим
+            if (MathF.Abs(scale) < Epsilon)
+                return float.NaN;
+            return function(x / scale);
+        }
+
+        /// <summary>
+        /// Applies vertical scaling: g(x) = scale * f(x)
+        /// </summary>
+        public static float ScaleVertical(Func<float, float> function, float x, float scale)
+        {
+            return scale * function(x);
+        }
     }
 }

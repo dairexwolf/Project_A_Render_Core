@@ -429,5 +429,70 @@ namespace MathLib.Tests
             // Assert
             Assert.Equal(260f, res, precision: 5);
         }
+
+        [Fact]
+        public void ShiftHorizontal_ParabolaRight_ReturnsShiftedValue()
+        {
+            // f(x) = x^2, shift right by 2 = (x-2) ^ 2
+            // Example = g(3) = (3-2)^2 = 1
+            Func<float, float> parabola = x => x * x;
+            float res = MathUtils.ShiftHorizontal(parabola, 3f, 2f);
+            Assert.Equal(1f, res, precision: 5);
+        }
+
+        [Fact]
+        public void ShiftVertical_SineUp_ReturnShiftedValue()
+        {
+            // f(x) = sin(x), shift up by 1: g(x) = sin(x) +1
+            // g(0) = sin(0) + 1 = 0 + 1 = 1
+            Func<float, float> sine = x => MathF.Sin(x);
+            float result = MathUtils.ShiftVertical(sine, 0f, 1f);
+            Assert.Equal(1f, result, precision: 5);
+        }
+
+        [Fact]
+        public void ScaleHorizontal_DivideByNull_ReturnsNaN()
+        {
+            Func<float, float> fun = x => 2*x + 5;
+            float res = MathUtils.ScaleHorizontal(fun, 5, 0);
+            Assert.True(float.IsNaN(res));
+        }
+
+        [Fact]
+        public void ScaleHorizontal_LinearFuncScaling_ReturnsScaledValue()
+        {
+            // f(x) = 2x + 6, scale by 2: g(x) = 2*(x/2)+6
+            // g(5) = 2*(5/2)+6 = 2 * 2.5 + 6 = 11
+            Func<float, float> fun = x => 2 * x + 6;
+            float res = MathUtils.ScaleHorizontal(fun, 5, 2);
+            Assert.Equal(11f, res, precision: 5);
+        }
+
+        [Fact]
+        public void ScaleVertical_ParabolaStretch_ReturnsScaledValue()
+        {
+            // f(x) = x^2, scale by 2: g(x) = 2*x^2
+            // g(3) = 2 * 9 = 18
+            Func<float, float> parabola = x => x * x;
+            float res = MathUtils.ScaleVertical(parabola, 3f, 2f);
+            Assert.Equal(18f, res, precision: 5);
+        }
+
+        [Fact]
+        public void CombinedTransformations_Parabola_ReturnsCorrectValue()
+        {
+            // f(x) = x^2
+            // g(x) = 2*(x-1)^2 + 3 (сдвиг вправо на 1, растяжение по Y в 2 раза, сдвиг вврех на 3
+            // g(3) = 2*(3-1)^2 + 3 = 11
+
+            Func<float, float> parabola = x => x * x;
+            float res = MathUtils.ShiftVertical(
+                x => MathUtils.ScaleVertical(
+                    x => MathUtils.ShiftHorizontal(parabola, x, 1f),
+                    x, 2f),
+                3f, 3f);
+
+            Assert.Equal(11f, res, precision: 5);
+        }
     }
 }
